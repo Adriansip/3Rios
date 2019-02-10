@@ -45,7 +45,13 @@
 									@foreach($facturas as $factura)
 									<tr>
 										<td class="text-center">{{$factura->FacCxpNum}}</td>
-										<td class="text-center">{{$factura->movimiento->RefCli}}</td>
+										<td class="text-center">
+											@if(isset($factura->movimiento))
+											{{$factura->movimiento->RefCli}}
+											@else
+											Este movimiento ha sido eliminado
+											@endif
+										</td>
 										<td class="text-center">{{$factura->FecCreFac}}</td>
 										<td class="text-center">{{$factura->FecFac}}</td>
 										<td class="text-center">{{$factura->TotFac}}</td>

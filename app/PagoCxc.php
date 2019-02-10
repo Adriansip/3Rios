@@ -15,7 +15,7 @@ class PagoCxc extends Model
     /*Un pago pertenece a una factura*/
     public function factura()
     {
-        # code...
+        return $this->belongsTo(FacturaCxc::class,'FacCxcNum');
     }
 
 }

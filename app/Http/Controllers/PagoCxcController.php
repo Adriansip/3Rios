@@ -52,6 +52,12 @@ class PagoCxcController extends Controller
            return back();
          }
 
+         if($request->MonPag<0){
+           Session::flash('message','El pago es un numero invalido, verifique.');
+           Session::flash('class','warning');
+           return back();
+         }
+
          $pago=new PagoCxc();
          $pago->fill($request->all());
 
@@ -103,13 +109,43 @@ class PagoCxcController extends Controller
      public function update(Request $request, $id)
      {
        $pago=PagoCxc::find($id);
+
+       //FacturaCxc
+       $factura=FacturaCxc::where('FacCxcNum',$request->FacCxcNum)->first();
+       //total factura
+       $total=$factura->TotFac;
+       //saldo de la factura
+       $saldo=$factura->SalFac;
+       //Nuevo Pago
+       $nuevoPago=$request->MonPag;
+
+
+       if($nuevoPago>$total || $nuevoPago<0){
+         Session::flash('message','El pago es mayor al total de la factura, o es un numero invalido, verifique');
+         Session::flash('class','warning');
+         return back();
+       }
+
+       //Pago Actual
+       $pagoAct=$pago->MonPag;
+       $diferencia=$pagoAct-$nuevoPago;
+
        $pago->fill($request->all());
-       /*
-       Detalle, si se actualiza el monto del pago, se debe actualizar el saldo??
-       */
+       //Actualizar el saldo de la factura
+       $factura->SalFac += $diferencia;
+
+       if($factura->SalFac<0){
+         Session::flash('message','El pago es mayor al saldo pendiente, o es un numero invalido, verifique');
+         Session::flash('class','warning');
+         return back();
+       }
+
+
        if($pago->save()){
          Session::flash('message','Pago Actualizado');
          Session::flash('class','success');
+         //Confirmando cambio en la factura
+         $factura->save();
        }else{
          Session::flash('message','Algo salio mal');
          Session::flash('class','danger');

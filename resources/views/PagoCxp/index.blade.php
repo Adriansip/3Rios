@@ -38,7 +38,7 @@
 								<tbody>
 									@foreach($pagos as $pago)
 									<tr>
-										<td class="text-center">{{$pago->PagCxpId}}</td>
+										<td class="text-center">{{$pago->NumPag}}</td>
 										<td class="text-center">{{$pago->FacCxpNum}}</td>
 										<td class="text-center">{{$pago->MonPag}}</td>
 										<td class="text-center">{{$pago->FecPag}}</td>

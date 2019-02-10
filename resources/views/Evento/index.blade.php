@@ -40,7 +40,7 @@
 		<h5 class="text-left">Fecha de Servicio
 			<strong>
 				<?php
-			setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
+			setlocale(LC_ALL,"es_ES","esp");
 			echo $fecha = strftime( "%d de %B de %Y - %T ",strtotime($movimiento->created_at) );
 			?>
 			</strong>
@@ -48,6 +48,9 @@
 		<h5 class="text-left">Codigo Minigrip:
 			<strong>
 				{{$movimiento->RefCli}}</strong>
+		</h5>
+		<h5>
+		Observacion: <strong>{{$movimiento->ObsMov}}</strong>
 		</h5>
 	</div>
 	@foreach($movimiento->eventos as $evento)
@@ -70,7 +73,7 @@
 							@endif
 							<p class="font-weight-bolder">
 								<?php
-							setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
+							setlocale(LC_ALL,"es_ES","esp");
 							echo $fecha = strftime( "%d de %B de %Y / %T ",strtotime($evento->created_at) );
 							?>
 								/
